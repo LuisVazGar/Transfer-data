@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Copiar Texto en PDF</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Presiona el botón para copiar el texto</h2>
+    <button onclick="copiarTexto()">Copiar Texto</button>
+
+    <script>
+        function copiarTexto() {
+            // Texto que deseas copiar
+            var texto = "Este es el texto que será copiado.";
+
+            // Crear un elemento de texto temporal
+            var tempInput = document.createElement("textarea");
+            tempInput.value = texto;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+
+            // Copiar el texto al portapapeles
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            // Mostrar mensaje de confirmación
+            alert("Texto copiado: " + texto);
+        }
+    </script>
+</body>
+</html>
