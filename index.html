@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Copiar Texto en PDF</title>
+    <title>Copiar Texto e Ir a la Transacción</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,13 +11,24 @@
         button {
             padding: 10px 20px;
             font-size: 16px;
+            margin: 10px;
             cursor: pointer;
+        }
+        h2 {
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
+
     <h2>Presiona el botón para copiar el texto</h2>
     <button onclick="copiarTexto()">Copiar Texto</button>
+
+    <h2>Ir a la transacción en tu app bancaria</h2>
+    
+    <!-- Botones para iOS y Android -->
+    <button onclick="irApp('ios')">Ir a la Transacción (iOS)</button>
+    <button onclick="irApp('android')">Ir a la Transacción (Android)</button>
 
     <script>
         function copiarTexto() {
@@ -36,6 +47,57 @@
 
             // Mostrar mensaje de confirmación
             alert("Texto copiado: " + texto);
+        }
+
+        function irApp(plataforma) {
+            var url;
+
+            // Redirección dependiendo de la plataforma
+            if (plataforma === 'ios') {
+                url = seleccionarApp('ios');
+            } else if (plataforma === 'android') {
+                url = seleccionarApp('android');
+            }
+
+            if (url) {
+                window.open(url, '_blank');
+            } else {
+                alert("No se encontró la app seleccionada.");
+            }
+        }
+
+        function seleccionarApp(plataforma) {
+            // Lista de apps bancarias disponibles
+            var apps = {
+                bbva: {
+                    ios: "https://apps.apple.com/mx/app/bbva-m%C3%B3vil/id417716298",
+                    android: "https://play.google.com/store/apps/details?id=com.bbva.bbvacontigo"
+                },
+                banorte: {
+                    ios: "https://apps.apple.com/mx/app/banorte-m%C3%B3vil/id503019812",
+                    android: "https://play.google.com/store/apps/details?id=banorte.mbanking"
+                },
+                santander: {
+                    ios: "https://apps.apple.com/mx/app/santander-m%C3%A9xico/id560227884",
+                    android: "https://play.google.com/store/apps/details?id=mx.com.santander.superm"
+                },
+                citibanamex: {
+                    ios: "https://apps.apple.com/mx/app/citibanamex-m%C3%B3vil/id372100689",
+                    android: "https://play.google.com/store/apps/details?id=com.citibanamex.banamexmobile"
+                },
+                hsbc: {
+                    ios: "https://apps.apple.com/mx/app/hsbc-m%C3%B3vil-mx/id508889846",
+                    android: "https://play.google.com/store/apps/details?id=com.htsu.hsbcmx"
+                }
+            };
+
+            // Selecciona la primera app disponible
+            for (var app in apps) {
+                if (apps.hasOwnProperty(app)) {
+                    return apps[app][plataforma];
+                }
+            }
+            return null;
         }
     </script>
 </body>
